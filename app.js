@@ -968,23 +968,51 @@
   }, 30000);
 
   const root = document.documentElement;
+  const isTyping = () => {
+    const a = document.activeElement;
+    return !!a && (a.tagName === "TEXTAREA" || (a.tagName === "INPUT" && !/^(file|button|submit|checkbox|radio)$/.test(a.type)));
+  };
+  let lastKey = "";
   function syncViewport() {
     const vv = window.visualViewport;
-    if (!vv) return;
-    const full = window.innerHeight;
-    const keyboard = full - vv.height > 120;
-    root.style.setProperty("--vv-h", `${Math.round(vv.height)}px`);
-    root.style.setProperty("--vv-top", `${Math.round(vv.offsetTop)}px`);
-    root.style.setProperty("--vv-bottom", `${Math.max(0, Math.round(full - vv.height - vv.offsetTop))}px`);
+    const keyboard = !!vv && isTyping() && window.innerHeight - vv.height > 120;
+    const key = keyboard ? `${Math.round(vv.height)}:${Math.round(vv.offsetTop)}` : "none";
+    if (key === lastKey) return;
+    lastKey = key;
+    if (keyboard) {
+      root.style.setProperty("--vv-h", `${Math.round(vv.height)}px`);
+      root.style.setProperty("--vv-top", `${Math.round(vv.offsetTop)}px`);
+      root.style.setProperty("--vv-bottom", `${Math.max(0, Math.round(window.innerHeight - vv.height - vv.offsetTop))}px`);
+    } else {
+      root.style.removeProperty("--vv-h");
+      root.style.removeProperty("--vv-top");
+      root.style.removeProperty("--vv-bottom");
+      if (window.scrollY) window.scrollTo(0, 0);
+    }
     root.classList.toggle("kb", keyboard);
     if (stick) requestAnimationFrame(toBottom);
   }
+  let watchUntil = 0;
+  function watchViewport(ms) {
+    const start = !watchUntil;
+    watchUntil = Math.max(watchUntil, performance.now() + ms);
+    if (!start) return;
+    const step = () => {
+      syncViewport();
+      if (performance.now() < watchUntil) requestAnimationFrame(step);
+      else watchUntil = 0;
+    };
+    requestAnimationFrame(step);
+  }
   if (window.visualViewport) {
-    window.visualViewport.addEventListener("resize", syncViewport);
+    window.visualViewport.addEventListener("resize", () => watchViewport(200));
     window.visualViewport.addEventListener("scroll", syncViewport);
   }
-  addEventListener("focusin", () => setTimeout(syncViewport, 50));
-  addEventListener("focusout", () => setTimeout(() => { window.scrollTo(0, 0); syncViewport(); }, 50));
+  addEventListener("scroll", syncViewport, { passive: true });
+  addEventListener("resize", () => watchViewport(200));
+  document.addEventListener("focusin", () => watchViewport(1000));
+  document.addEventListener("focusout", () => watchViewport(1000));
+  document.addEventListener("touchend", () => { if (isTyping()) watchViewport(1000); }, { passive: true });
   syncViewport();
 
   thread = thread.filter((i) => !i.id.startsWith("tmp-"));

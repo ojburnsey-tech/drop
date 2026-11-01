@@ -21,7 +21,7 @@ html {
   min-height: 100%;
   min-height: 100lvh;
   background-color: var(--bg-top);
-  background-image: linear-gradient(180deg, var(--bg-top) 0, transparent 150px), var(--bg);
+  background-image: linear-gradient(180deg, var(--bg-top) 0, var(--bg-top) 24px, rgba(0, 0, 0, 0) 280px), var(--bg);
   background-repeat: no-repeat;
   background-size: 100% max(100%, 100lvh, 1000px);
   background-position: top center;
@@ -85,7 +85,7 @@ html[data-bg="sunset"] {
   --glass: rgba(30, 18, 16, 0.58);
   --glass-strong: rgba(26, 15, 13, 0.82);
   --sheet: rgba(30, 20, 18, 0.9);
-  background-size: 100% 150px, auto max(100%, 100lvh, 1000px);
+  background-size: 100% 280px, auto max(100%, 100lvh, 1000px);
   background-position: top center, top center;
 }
 
@@ -142,6 +142,7 @@ input, textarea { font: inherit; color: inherit; }
   right: 0;
   top: var(--vv-top, 0px);
   height: var(--vv-h, 100%);
+  transition: height 120ms linear;
   display: flex;
   flex-direction: column;
   max-width: 640px;
