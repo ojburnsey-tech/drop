@@ -973,9 +973,12 @@
     return !!a && (a.tagName === "TEXTAREA" || (a.tagName === "INPUT" && !/^(file|button|submit|checkbox|radio)$/.test(a.type)));
   };
   let lastKey = "";
+  let baseH = Math.max(window.innerHeight, window.visualViewport ? window.visualViewport.height : 0);
   function syncViewport() {
     const vv = window.visualViewport;
-    const keyboard = !!vv && isTyping() && window.innerHeight - vv.height > 120;
+    const typing = isTyping();
+    if (!typing) baseH = Math.max(window.innerHeight, vv ? vv.height : 0);
+    const keyboard = !!vv && typing && baseH - vv.height > 120;
     const key = keyboard ? `${Math.round(vv.height)}:${Math.round(vv.offsetTop)}` : "none";
     if (key === lastKey) return;
     lastKey = key;
@@ -1010,9 +1013,10 @@
   }
   addEventListener("scroll", syncViewport, { passive: true });
   addEventListener("resize", () => watchViewport(200));
-  document.addEventListener("focusin", () => watchViewport(1000));
-  document.addEventListener("focusout", () => watchViewport(1000));
-  document.addEventListener("touchend", () => { if (isTyping()) watchViewport(1000); }, { passive: true });
+  document.addEventListener("focusin", () => watchViewport(1600));
+  document.addEventListener("focusout", () => watchViewport(1600));
+  document.addEventListener("touchstart", () => { baseH = isTyping() ? baseH : Math.max(window.innerHeight, window.visualViewport ? window.visualViewport.height : 0); }, { passive: true });
+  document.addEventListener("touchend", () => watchViewport(1600), { passive: true });
   syncViewport();
 
   thread = thread.filter((i) => !i.id.startsWith("tmp-"));
