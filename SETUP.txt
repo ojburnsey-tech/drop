@@ -1,0 +1,30 @@
+Drop: your iPhone send page
+
+Put this page on GitHub Pages (free, about 5 minutes, one time only)
+
+1. Go to github.com and sign in.
+2. Click the + at the top right, then New repository.
+3. Name it: drop
+   Leave it Public (GitHub Pages is only free for public repositories; the page contains nothing private).
+   Click Create repository.
+4. On the next screen, click "uploading an existing file".
+5. Drag in these five files: index.html, app.css, app.js, bg.jpg, apple-touch-icon.png
+   Click Commit changes.
+6. Open the repository's Settings tab, then Pages in the left sidebar.
+   Under "Build and deployment", set Source to "Deploy from a branch",
+   Branch to "main" and folder to "/ (root)", then click Save.
+7. Wait about a minute and refresh. GitHub shows your address at the top of the Pages screen:
+   https://YOUR-USERNAME.github.io/drop/
+
+Connect it to your Chromebook
+
+8. Open a new tab, click the phone button in the bottom-left, choose From iPhone,
+   paste your address and click Save.
+9. Point your iPhone camera at the QR code that appears and tap the link.
+10. In Safari, tap Share, then Add to Home Screen. Open it from your Home Screen from now on.
+
+Privacy
+
+Your private channel name travels in the part of the QR link after the # sign,
+which browsers never send to GitHub. If you ever want to cut off old pairings,
+use Reset pairing in the new tab settings and scan the new code.

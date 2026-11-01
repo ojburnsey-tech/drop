@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1">
+  <meta name="theme-color" content="#1a0f0d">
+  <meta name="color-scheme" content="dark">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Drop">
+  <meta name="referrer" content="no-referrer">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <link rel="icon" href="apple-touch-icon.png">
+  <title>Drop</title>
+  <link rel="stylesheet" href="app.css">
+</head>
+<body>
+  <div class="backdrop" aria-hidden="true"></div>
+
+  <main id="app" hidden>
+    <header class="top">
+      <p class="eyebrow"><span class="dot"></span><span id="status">Ready</span></p>
+      <h1>Send to Chromebook</h1>
+    </header>
+
+    <section class="tiles" aria-label="Choose what to send">
+      <label class="tile">
+        <input id="pickPhotos" type="file" accept="image/*,video/*" multiple>
+        <svg viewBox="0 0 28 28"><rect x="3.5" y="5.5" width="21" height="17" rx="4" fill="none" stroke="currentColor" stroke-width="1.9"/><circle cx="10" cy="11.5" r="2.2" fill="currentColor"/><path d="m5 20.5 5.6-5.6 3.6 3.6 3.2-3.2 5.6 5.6" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round"/></svg>
+        <span>Photos</span>
+      </label>
+      <label class="tile">
+        <input id="pickCamera" type="file" accept="image/*" capture="environment">
+        <svg viewBox="0 0 28 28"><path d="M4 10.5A3 3 0 0 1 7 7.5h2.6l1.7-2.4h5.4l1.7 2.4H21a3 3 0 0 1 3 3V20a3 3 0 0 1-3 3H7a3 3 0 0 1-3-3Z" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round"/><circle cx="14" cy="15" r="4.2" fill="none" stroke="currentColor" stroke-width="1.9"/></svg>
+        <span>Camera</span>
+      </label>
+      <label class="tile">
+        <input id="pickFiles" type="file" multiple>
+        <svg viewBox="0 0 28 28"><path d="M3.5 8.5a3 3 0 0 1 3-3h4.6l2.4 2.6h8a3 3 0 0 1 3 3v9.4a3 3 0 0 1-3 3h-15a3 3 0 0 1-3-3Z" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round"/></svg>
+        <span>Files</span>
+      </label>
+    </section>
+
+    <form id="composer" class="composer" autocomplete="off">
+      <textarea id="text" rows="1" placeholder="Text or a link" enterkeyhint="send"></textarea>
+      <button type="button" id="paste" class="paste">Paste</button>
+      <button type="submit" id="sendText" class="send" aria-label="Send text" disabled>
+        <svg viewBox="0 0 24 24"><path d="M12 19V5.5M6 11.5l6-6 6 6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+    </form>
+
+    <section class="recent" aria-live="polite">
+      <h2 id="recentTitle" hidden>Sent</h2>
+      <ul id="list"></ul>
+    </section>
+
+    <p class="foot">Up to 15 MB each · files are deleted after 3 hours</p>
+  </main>
+
+  <main id="unpaired" class="unpaired" hidden>
+    <svg viewBox="0 0 64 64" aria-hidden="true"><rect x="8" y="8" width="18" height="18" rx="4" fill="none" stroke="currentColor" stroke-width="3"/><rect x="38" y="8" width="18" height="18" rx="4" fill="none" stroke="currentColor" stroke-width="3"/><rect x="8" y="38" width="18" height="18" rx="4" fill="none" stroke="currentColor" stroke-width="3"/><path d="M38 38h6v6h-6zM50 38h6v6h-6zM44 44h6v6h-6zM38 50h6v6h-6zM50 50h6v6h-6z" fill="currentColor"/></svg>
+    <h1>Scan to connect</h1>
+    <p>Open a new tab on your Chromebook, click the phone button, choose <b>From iPhone</b> and scan the code with your camera.</p>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
