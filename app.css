@@ -137,12 +137,18 @@ input, textarea { font: inherit; color: inherit; }
 
 
 .app {
-  height: 100%;
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: var(--vv-top, 0px);
+  height: var(--vv-h, 100%);
   display: flex;
   flex-direction: column;
   max-width: 640px;
   margin: 0 auto;
 }
+html.kb .dock { padding-bottom: 8px; }
+html.kb .quick { display: none; }
 
 .bar {
   display: flex;
@@ -440,7 +446,8 @@ input, textarea { font: inherit; color: inherit; }
   bottom: 0;
   max-width: 640px;
   margin: 0 auto;
-  max-height: 78vh;
+  bottom: var(--vv-bottom, 0px);
+  max-height: min(78vh, calc(var(--vv-h, 100vh) - 40px));
   display: flex;
   flex-direction: column;
   padding: 6px 0 calc(var(--safe-b) + 12px);
@@ -452,7 +459,8 @@ input, textarea { font: inherit; color: inherit; }
   z-index: 31;
   animation: sheet-in 420ms var(--ease);
 }
-.sheet.tall { height: 86vh; max-height: 86vh; }
+.sheet.tall { height: min(86vh, calc(var(--vv-h, 100vh) - 40px)); max-height: none; }
+html.kb .sheet { padding-bottom: 10px; }
 .sheet.closing { animation: sheet-out 260ms var(--ease) forwards; }
 @keyframes sheet-in { from { transform: translateY(100%); } }
 @keyframes sheet-out { to { transform: translateY(100%); } }

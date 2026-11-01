@@ -967,6 +967,26 @@
     if (document.visibilityState === "visible") { renderPresence(); hello(); }
   }, 30000);
 
+  const root = document.documentElement;
+  function syncViewport() {
+    const vv = window.visualViewport;
+    if (!vv) return;
+    const full = window.innerHeight;
+    const keyboard = full - vv.height > 120;
+    root.style.setProperty("--vv-h", `${Math.round(vv.height)}px`);
+    root.style.setProperty("--vv-top", `${Math.round(vv.offsetTop)}px`);
+    root.style.setProperty("--vv-bottom", `${Math.max(0, Math.round(full - vv.height - vv.offsetTop))}px`);
+    root.classList.toggle("kb", keyboard);
+    if (stick) requestAnimationFrame(toBottom);
+  }
+  if (window.visualViewport) {
+    window.visualViewport.addEventListener("resize", syncViewport);
+    window.visualViewport.addEventListener("scroll", syncViewport);
+  }
+  addEventListener("focusin", () => setTimeout(syncViewport, 50));
+  addEventListener("focusout", () => setTimeout(() => { window.scrollTo(0, 0); syncViewport(); }, 50));
+  syncViewport();
+
   thread = thread.filter((i) => !i.id.startsWith("tmp-"));
   render();
   renderPresence();
