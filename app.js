@@ -607,10 +607,23 @@
     });
   }
 
+  let stick = true;
+  const toBottom = () => { const t = $("thread"); t.scrollTop = t.scrollHeight; };
+  $("thread").addEventListener("scroll", () => {
+    const t = $("thread");
+    stick = t.scrollHeight - t.scrollTop - t.clientHeight < 80;
+  }, { passive: true });
+  if ("ResizeObserver" in window) {
+    new ResizeObserver(() => { if (stick) toBottom(); }).observe($("items"));
+    new ResizeObserver(() => { if (stick) toBottom(); }).observe($("thread"));
+  }
+  $("items").addEventListener("load", () => { if (stick) toBottom(); }, true);
+
   function doRender(freshId) {
     const box = $("items");
     const threadEl = $("thread");
-    const nearBottom = threadEl.scrollHeight - threadEl.scrollTop - threadEl.clientHeight < 120;
+    if (freshId) stick = true;
+    const nearBottom = stick;
     box.replaceChildren();
     $("empty").hidden = thread.length > 0;
     let lastDay = "";
@@ -627,7 +640,11 @@
       row.append(bubbleFor(item), metaFor(item));
       box.append(row);
     }
-    if (nearBottom || freshId) threadEl.scrollTop = threadEl.scrollHeight;
+    if (nearBottom || freshId) {
+      toBottom();
+      requestAnimationFrame(toBottom);
+      setTimeout(toBottom, 120);
+    }
   }
 
   function findItem(id) {
@@ -895,6 +912,7 @@
     $("openOnLaptop").hidden = !isUrl(v);
   };
   ta.addEventListener("input", grow);
+  ta.addEventListener("focus", () => { if (stick) setTimeout(toBottom, 300); });
   ta.addEventListener("keydown", (e) => {
     if (e.key === "Enter" && !e.shiftKey && !e.isComposing) {
       e.preventDefault();

@@ -20,9 +20,14 @@
 }
 
 * { box-sizing: border-box; margin: 0; -webkit-tap-highlight-color: transparent; }
-html { background: #1d110e; height: 100%; }
+html {
+  min-height: 100%;
+  min-height: 100lvh;
+  background: #1d110e url("bg.jpg") center / cover no-repeat;
+}
 body {
-  height: 100%;
+  height: 100vh;
+  height: 100dvh;
   overflow: hidden;
   font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, sans-serif;
   color: var(--label);
@@ -35,13 +40,6 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 svg { display: block; }
 input, textarea { font: inherit; color: inherit; }
 
-.backdrop {
-  position: fixed;
-  inset: -40px;
-  background: url("bg.jpg") center / cover no-repeat;
-  filter: saturate(1.15) brightness(0.6);
-  z-index: -1;
-}
 
 .app {
   height: 100%;
@@ -91,8 +89,10 @@ input, textarea { font: inherit; color: inherit; }
   flex: 1;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
-  padding: 4px 14px 12px;
+  padding: 10px 14px 12px;
   overscroll-behavior: contain;
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 18px);
+  mask-image: linear-gradient(to bottom, transparent 0, #000 18px);
 }
 
 .empty {
@@ -542,7 +542,8 @@ input, textarea { font: inherit; color: inherit; }
 .seg button.on { background: rgba(255, 255, 255, 0.24); color: #fff; box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3); }
 
 .unpaired {
-  min-height: 100%;
+  height: 100%;
+  overflow-y: auto;
   display: flex;
   flex-direction: column;
   align-items: center;
