@@ -7,13 +7,23 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="theme-color" id="themeColor" content="#0b0f1d">
+  <script>
+    (function () {
+      var tops = { aurora: "#0b0f1d", midnight: "#05060c", graphite: "#121214", ocean: "#031420", rose: "#160a14", sunset: "#2a1714" };
+      var t = "aurora";
+      try { var s = JSON.parse(localStorage.getItem("drop.bg")); if (tops[s]) t = s; } catch (e) {}
+      document.documentElement.setAttribute("data-bg", t);
+      document.getElementById("themeColor").setAttribute("content", tops[t]);
+    })();
+  </script>
   <meta name="apple-mobile-web-app-title" content="Drop">
   <meta name="referrer" content="no-referrer">
-  <link rel="manifest" href="manifest.webmanifest?v=5">
+  <link rel="manifest" href="manifest.webmanifest?v=6">
   <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
   <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
   <title>Drop</title>
-  <link rel="stylesheet" href="app.css?v=5">
+  <link rel="stylesheet" href="app.css?v=6">
 </head>
 <body>
 
@@ -119,6 +129,16 @@
       <button type="button" class="text-btn" data-close>Done</button>
     </header>
     <div class="settings-body">
+      <h3>Background</h3>
+      <div class="themes" id="themes">
+        <button type="button" class="theme" data-bg="aurora" style="--sw: radial-gradient(120% 90% at 10% 10%, #38bda8 0, transparent 60%), radial-gradient(90% 90% at 100% 40%, #7c5cff 0, transparent 62%), #0d1326"><span>Aurora</span></button>
+        <button type="button" class="theme" data-bg="midnight" style="--sw: radial-gradient(100% 80% at 50% 0%, #3a488c 0, transparent 72%), #05060c"><span>Midnight</span></button>
+        <button type="button" class="theme" data-bg="graphite" style="--sw: radial-gradient(90% 80% at 20% 10%, #3a3a3e 0, transparent 65%), #141416"><span>Graphite</span></button>
+        <button type="button" class="theme" data-bg="ocean" style="--sw: radial-gradient(120% 90% at 85% 5%, #14a0c8 0, transparent 62%), radial-gradient(100% 90% at 10% 80%, #0a5aaa 0, transparent 65%), #062238"><span>Ocean</span></button>
+        <button type="button" class="theme" data-bg="rose" style="--sw: radial-gradient(110% 90% at 10% 5%, #ff5c96 0, transparent 60%), radial-gradient(90% 90% at 100% 50%, #aa50ff 0, transparent 62%), #1c0d1d"><span>Rose</span></button>
+        <button type="button" class="theme" data-bg="sunset" style="--sw: url('bg.jpg')"><span>Sunset</span></button>
+      </div>
+
       <h3>Share sheet shortcuts</h3>
       <p class="hint">Add “Send to Chromebook” and “Open on Chromebook” to your iPhone's Share menu with the Shortcuts app. These two addresses are what the shortcuts post to.</p>
       <div class="copy-row">
@@ -147,7 +167,7 @@
         <button type="button" class="text-btn" id="copyPairing">Copy</button>
       </div>
       <button type="button" class="wide-btn danger" id="clearHistory">Clear history on this iPhone</button>
-      <p class="version">Drop version 5</p>
+      <p class="version">Drop version 6</p>
     </div>
   </section>
 
@@ -199,7 +219,7 @@
 
   <div class="toast" id="toast" role="status"></div>
 
-  <script src="scanner.js?v=5"></script>
-  <script src="app.js?v=5"></script>
+  <script src="scanner.js?v=6"></script>
+  <script src="app.js?v=6"></script>
 </body>
 </html>

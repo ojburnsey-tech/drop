@@ -861,6 +861,20 @@
   document.querySelectorAll("[data-copy]").forEach((b) => b.addEventListener("click", () => copy($(b.dataset.copy).textContent)));
   $("copyPairing").addEventListener("click", () => copy(`${location.origin}${location.pathname}#t=${topic}${server !== "https://ntfy.sh" ? `&s=${server}` : ""}`));
   $("openSettings").addEventListener("click", () => openSheet("sheetSettings"));
+
+  const BG_TOPS = { aurora: "#0b0f1d", midnight: "#05060c", graphite: "#121214", ocean: "#031420", rose: "#160a14", sunset: "#2a1714" };
+  function applyBg(name) {
+    const t = BG_TOPS[name] ? name : "aurora";
+    document.documentElement.dataset.bg = t;
+    $("themeColor").setAttribute("content", BG_TOPS[t]);
+    document.querySelectorAll("#themes .theme").forEach((b) => b.classList.toggle("on", b.dataset.bg === t));
+    store.set("bg", t);
+  }
+  $("themes").addEventListener("click", (e) => {
+    const b = e.target.closest(".theme");
+    if (b) applyBg(b.dataset.bg);
+  });
+  applyBg(store.get("bg", "aurora"));
   $("clearHistory").addEventListener("click", () => {
     thread = [];
     db.clear();

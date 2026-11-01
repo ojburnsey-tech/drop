@@ -6,9 +6,6 @@
   --label-3: rgba(235, 235, 245, 0.42);
   --fill: rgba(255, 255, 255, 0.1);
   --fill-2: rgba(255, 255, 255, 0.16);
-  --glass: rgba(30, 18, 16, 0.58);
-  --glass-strong: rgba(26, 15, 13, 0.82);
-  --sheet: rgba(30, 20, 18, 0.9);
   --edge: inset 0 0.5px 0 rgba(255, 255, 255, 0.18), inset 0 0 0 0.5px rgba(255, 255, 255, 0.08);
   --tint: #0a84ff;
   --green: #30d158;
@@ -23,11 +20,105 @@
 html {
   min-height: 100%;
   min-height: 100lvh;
-  background-color: #2a1714;
-  background-image: url("bg.jpg");
+  background-color: var(--bg-top);
+  background-image: linear-gradient(180deg, var(--bg-top) 0, transparent 150px), var(--bg);
   background-repeat: no-repeat;
-  background-position: center;
-  background-size: max(100%, 320vh) auto;
+  background-size: 100% max(100%, 100lvh, 1000px);
+  background-position: top center;
+}
+
+html, html[data-bg="aurora"] {
+  --bg-top: #0b0f1d;
+  --bg: radial-gradient(120% 60% at 15% 8%, rgba(56, 189, 168, 0.45), transparent 60%),
+        radial-gradient(90% 55% at 95% 30%, rgba(124, 92, 255, 0.5), transparent 62%),
+        radial-gradient(110% 60% at 30% 95%, rgba(34, 120, 200, 0.42), transparent 65%),
+        linear-gradient(180deg, #0b0f1d 0%, #0d1326 55%, #0a0e1a 100%);
+  --glass: rgba(18, 22, 40, 0.5);
+  --glass-strong: rgba(14, 18, 34, 0.8);
+  --sheet: rgba(20, 24, 42, 0.9);
+}
+
+html[data-bg="midnight"] {
+  --bg-top: #05060c;
+  --bg: radial-gradient(100% 55% at 50% 0%, rgba(58, 72, 140, 0.5), transparent 70%),
+        radial-gradient(80% 45% at 50% 100%, rgba(30, 40, 90, 0.55), transparent 70%),
+        linear-gradient(180deg, #05060c 0%, #0b0e1c 50%, #05060c 100%);
+  --glass: rgba(22, 26, 44, 0.55);
+  --glass-strong: rgba(16, 19, 34, 0.84);
+  --sheet: rgba(20, 23, 38, 0.92);
+}
+
+html[data-bg="graphite"] {
+  --bg-top: #121214;
+  --bg: radial-gradient(90% 50% at 20% 10%, rgba(255, 255, 255, 0.07), transparent 60%),
+        radial-gradient(90% 60% at 90% 90%, rgba(255, 255, 255, 0.05), transparent 60%),
+        linear-gradient(180deg, #121214 0%, #1a1a1d 50%, #0e0e10 100%);
+  --glass: rgba(44, 44, 48, 0.6);
+  --glass-strong: rgba(34, 34, 38, 0.86);
+  --sheet: rgba(34, 34, 38, 0.94);
+}
+
+html[data-bg="ocean"] {
+  --bg-top: #031420;
+  --bg: radial-gradient(120% 60% at 80% 5%, rgba(20, 160, 200, 0.5), transparent 62%),
+        radial-gradient(100% 60% at 10% 70%, rgba(10, 90, 170, 0.55), transparent 65%),
+        linear-gradient(180deg, #031420 0%, #062238 55%, #02101a 100%);
+  --glass: rgba(8, 30, 48, 0.52);
+  --glass-strong: rgba(6, 24, 40, 0.82);
+  --sheet: rgba(8, 28, 44, 0.92);
+}
+
+html[data-bg="rose"] {
+  --bg-top: #160a14;
+  --bg: radial-gradient(110% 55% at 10% 5%, rgba(255, 92, 150, 0.42), transparent 60%),
+        radial-gradient(90% 55% at 100% 45%, rgba(170, 80, 255, 0.4), transparent 62%),
+        radial-gradient(110% 55% at 40% 100%, rgba(255, 140, 110, 0.32), transparent 65%),
+        linear-gradient(180deg, #160a14 0%, #1c0d1d 55%, #12080f 100%);
+  --glass: rgba(40, 18, 36, 0.5);
+  --glass-strong: rgba(32, 14, 30, 0.82);
+  --sheet: rgba(38, 18, 34, 0.92);
+}
+
+html[data-bg="sunset"] {
+  --bg-top: #2a1714;
+  --bg: url("bg.jpg");
+  --glass: rgba(30, 18, 16, 0.58);
+  --glass-strong: rgba(26, 15, 13, 0.82);
+  --sheet: rgba(30, 20, 18, 0.9);
+  background-size: 100% 150px, auto max(100%, 100lvh, 1000px);
+  background-position: top center, top center;
+}
+
+.themes { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 6px; }
+.theme {
+  position: relative;
+  height: 74px;
+  border-radius: 16px;
+  overflow: hidden;
+  background: var(--sw);
+  background-size: cover;
+  box-shadow: inset 0 0 0 0.5px rgba(255, 255, 255, 0.14);
+  transition: transform 200ms var(--ease);
+}
+.theme:active { transform: scale(0.95); }
+.theme span {
+  position: absolute;
+  left: 10px;
+  bottom: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.6);
+}
+.theme.on { box-shadow: 0 0 0 2.5px #fff, inset 0 0 0 0.5px rgba(255, 255, 255, 0.14); }
+.theme.on::after {
+  content: "";
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='m6 12.5 4 4 8-8.5' fill='none' stroke='%23000' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / 12px no-repeat;
 }
 body {
   height: 100vh;
