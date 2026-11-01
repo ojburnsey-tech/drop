@@ -1,30 +1,22 @@
-Drop: your iPhone send page
+Drop: updating your iPhone app
 
-Put this page on GitHub Pages (free, about 5 minutes, one time only)
+1. Open your "drop" repository on github.com.
+2. Click Add file, then Upload files.
+3. Drag in all six files: index.html, app.css, app.js, scanner.js, bg.jpg, apple-touch-icon.png
+   (replace the old ones when asked), then click Commit changes.
+4. Wait about a minute for GitHub Pages to update.
 
-1. Go to github.com and sign in.
-2. Click the + at the top right, then New repository.
-3. Name it: drop
-   Leave it Public (GitHub Pages is only free for public repositories; the page contains nothing private).
-   Click Create repository.
-4. On the next screen, click "uploading an existing file".
-5. Drag in these five files: index.html, app.css, app.js, bg.jpg, apple-touch-icon.png
-   Click Commit changes.
-6. Open the repository's Settings tab, then Pages in the left sidebar.
-   Under "Build and deployment", set Source to "Deploy from a branch",
-   Branch to "main" and folder to "/ (root)", then click Save.
-7. Wait about a minute and refresh. GitHub shows your address at the top of the Pages screen:
-   https://YOUR-USERNAME.github.io/drop/
+Getting the full-screen app (no Safari address bar)
 
-Connect it to your Chromebook
+5. On your Chromebook, open a new tab, click the phone button, choose Drop, then Pairing code.
+6. Scan the code with your iPhone camera and open the link in Safari.
+7. Tap Share, then Add to Home Screen. Make sure Open as Web App is switched on, then tap Add.
+8. Delete any older Drop icon from your Home Screen, and always open the new one.
 
-8. Open a new tab, click the phone button in the bottom-left, choose From iPhone,
-   paste your address and click Save.
-9. Point your iPhone camera at the QR code that appears and tap the link.
-10. In Safari, tap Share, then Add to Home Screen. Open it from your Home Screen from now on.
+If the app ever asks you to connect: in Safari, open Drop's Settings, tap Copy next to Pairing link,
+then paste it into the box on the Connect screen of the Home Screen app.
 
-Privacy
+Share sheet shortcuts
 
-Your private channel name travels in the part of the QR link after the # sign,
-which browsers never send to GitHub. If you ever want to cut off old pairings,
-use Reset pairing in the new tab settings and scan the new code.
+In Drop, tap the gear, then "How to build the shortcuts". The two addresses you need are on that
+screen with Copy buttons.

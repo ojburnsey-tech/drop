@@ -2,8 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1">
-  <meta name="theme-color" content="#1a0f0d">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1, interactive-widget=resizes-content">
   <meta name="color-scheme" content="dark">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="mobile-web-app-capable" content="yes">
@@ -18,52 +17,188 @@
 <body>
   <div class="backdrop" aria-hidden="true"></div>
 
-  <main id="app" hidden>
-    <header class="top">
-      <p class="eyebrow"><span class="dot"></span><span id="status">Ready</span></p>
-      <h1>Send to Chromebook</h1>
+  <div id="app" class="app" hidden>
+    <header class="bar">
+      <div class="bar-title">
+        <h1>Drop</h1>
+        <p class="presence" id="presence"><i></i><span>Connecting…</span></p>
+      </div>
+      <div class="bar-actions">
+        <button type="button" class="round" id="openTabs" aria-label="Your Chromebook's tabs">
+          <svg viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="11" rx="2" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M2 19h20" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+        </button>
+        <button type="button" class="round" id="openNote" aria-label="Quick note">
+          <svg viewBox="0 0 24 24"><rect x="4.5" y="3.5" width="15" height="17" rx="3.5" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M8.5 8.5h7M8.5 12h7M8.5 15.5h4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+        </button>
+        <button type="button" class="round" id="openSettings" aria-label="Settings">
+          <svg viewBox="0 0 24 24"><path d="M19.19 10.24 L21.49 10.57 L21.49 13.43 L19.19 13.76 L18.33 15.84 L19.73 17.70 L17.70 19.73 L15.84 18.33 L13.76 19.19 L13.43 21.49 L10.57 21.49 L10.24 19.19 L8.16 18.33 L6.30 19.73 L4.27 17.70 L5.67 15.84 L4.81 13.76 L2.51 13.43 L2.51 10.57 L4.81 10.24 L5.67 8.16 L4.27 6.30 L6.30 4.27 L8.16 5.67 L10.24 4.81 L10.57 2.51 L13.43 2.51 L13.76 4.81 L15.84 5.67 L17.70 4.27 L19.73 6.30 L18.33 8.16 Z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><circle cx="12" cy="12" r="3" fill="none" stroke="currentColor" stroke-width="1.7"/></svg>
+        </button>
+      </div>
     </header>
 
-    <section class="tiles" aria-label="Choose what to send">
-      <label class="tile">
-        <input id="pickPhotos" type="file" accept="image/*,video/*" multiple>
-        <svg viewBox="0 0 28 28"><rect x="3.5" y="5.5" width="21" height="17" rx="4" fill="none" stroke="currentColor" stroke-width="1.9"/><circle cx="10" cy="11.5" r="2.2" fill="currentColor"/><path d="m5 20.5 5.6-5.6 3.6 3.6 3.2-3.2 5.6 5.6" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round"/></svg>
-        <span>Photos</span>
-      </label>
-      <label class="tile">
-        <input id="pickCamera" type="file" accept="image/*" capture="environment">
-        <svg viewBox="0 0 28 28"><path d="M4 10.5A3 3 0 0 1 7 7.5h2.6l1.7-2.4h5.4l1.7 2.4H21a3 3 0 0 1 3 3V20a3 3 0 0 1-3 3H7a3 3 0 0 1-3-3Z" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round"/><circle cx="14" cy="15" r="4.2" fill="none" stroke="currentColor" stroke-width="1.9"/></svg>
-        <span>Camera</span>
-      </label>
-      <label class="tile">
-        <input id="pickFiles" type="file" multiple>
-        <svg viewBox="0 0 28 28"><path d="M3.5 8.5a3 3 0 0 1 3-3h4.6l2.4 2.6h8a3 3 0 0 1 3 3v9.4a3 3 0 0 1-3 3h-15a3 3 0 0 1-3-3Z" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round"/></svg>
-        <span>Files</span>
-      </label>
-    </section>
+    <main id="thread" class="thread" aria-live="polite">
+      <div class="empty" id="empty">
+        <div class="empty-icon">
+          <svg viewBox="0 0 48 48"><rect x="13" y="5" width="22" height="38" rx="5.5" fill="none" stroke="currentColor" stroke-width="2.2"/><path d="M24 30V16M18.5 21.5 24 16l5.5 5.5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <h2>Nothing here yet</h2>
+        <p>Anything you send between your iPhone and Chromebook shows up here, both ways.</p>
+      </div>
+      <div id="items"></div>
+    </main>
 
-    <form id="composer" class="composer" autocomplete="off">
-      <textarea id="text" rows="1" placeholder="Text or a link" enterkeyhint="send"></textarea>
-      <button type="button" id="paste" class="paste">Paste</button>
-      <button type="submit" id="sendText" class="send" aria-label="Send text" disabled>
-        <svg viewBox="0 0 24 24"><path d="M12 19V5.5M6 11.5l6-6 6 6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </button>
-    </form>
+    <footer class="dock">
+      <div class="quick" role="toolbar" aria-label="Send">
+        <button type="button" class="pill primary" id="sendClipboard">
+          <svg viewBox="0 0 24 24"><rect x="6" y="4.5" width="12" height="16" rx="2.5" fill="none" stroke="currentColor" stroke-width="1.9"/><path d="M9.5 4.5V3.8A.8.8 0 0 1 10.3 3h3.4a.8.8 0 0 1 .8.8v.7" fill="none" stroke="currentColor" stroke-width="1.9"/><path d="M9.5 11h5M9.5 14.5h3.5" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/></svg>
+          <span>Clipboard</span>
+        </button>
+        <label class="pill">
+          <input id="pickPhotos" type="file" accept="image/*,video/*" multiple>
+          <svg viewBox="0 0 24 24"><rect x="3" y="4.5" width="18" height="15" rx="3.5" fill="none" stroke="currentColor" stroke-width="1.9"/><circle cx="8.6" cy="9.6" r="1.8" fill="currentColor"/><path d="m4.3 17.6 4.8-4.8 3.1 3.1 2.7-2.7 4.8 4.8" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round"/></svg>
+          <span>Photos</span>
+        </label>
+        <button type="button" class="pill" id="startScan">
+          <svg viewBox="0 0 24 24"><path d="M4 8.5V6a2 2 0 0 1 2-2h2.5M15.5 4H18a2 2 0 0 1 2 2v2.5M20 15.5V18a2 2 0 0 1-2 2h-2.5M8.5 20H6a2 2 0 0 1-2-2v-2.5M7.5 12h9" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/></svg>
+          <span>Scan</span>
+        </button>
+        <label class="pill">
+          <input id="pickCamera" type="file" accept="image/*" capture="environment">
+          <svg viewBox="0 0 24 24"><path d="M3.5 9a2.5 2.5 0 0 1 2.5-2.5h2.2l1.5-2h4.6l1.5 2H18A2.5 2.5 0 0 1 20.5 9v8.5A2.5 2.5 0 0 1 18 20H6a2.5 2.5 0 0 1-2.5-2.5Z" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round"/><circle cx="12" cy="13" r="3.5" fill="none" stroke="currentColor" stroke-width="1.9"/></svg>
+          <span>Camera</span>
+        </label>
+        <label class="pill">
+          <input id="pickFiles" type="file" multiple>
+          <svg viewBox="0 0 24 24"><path d="M3 7.5A2.5 2.5 0 0 1 5.5 5h4l2 2.2h7A2.5 2.5 0 0 1 21 9.7v7.8a2.5 2.5 0 0 1-2.5 2.5h-13A2.5 2.5 0 0 1 3 17.5Z" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round"/></svg>
+          <span>Files</span>
+        </label>
+      </div>
+      <form id="composer" class="composer" autocomplete="off">
+        <textarea id="text" rows="1" placeholder="Message or link" enterkeyhint="send"></textarea>
+        <button type="button" id="openOnLaptop" class="handoff" hidden>
+          <svg viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="11" rx="2" fill="none" stroke="currentColor" stroke-width="1.9"/><path d="M2 19h20" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/></svg>
+          <span>Open on laptop</span>
+        </button>
+        <button type="submit" id="sendText" class="send" aria-label="Send" disabled>
+          <svg viewBox="0 0 24 24"><path d="M12 19V5.5M6 11.5l6-6 6 6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </form>
+    </footer>
+  </div>
 
-    <section class="recent" aria-live="polite">
-      <h2 id="recentTitle" hidden>Sent</h2>
-      <ul id="list"></ul>
-    </section>
+  <div class="scrim" id="scrim" hidden></div>
 
-    <p class="foot">Up to 15 MB each · files are deleted after 3 hours</p>
-  </main>
+  <section class="sheet" id="sheetTabs" role="dialog" aria-label="Chromebook tabs" hidden>
+    <div class="grabber"></div>
+    <header class="sheet-head">
+      <div>
+        <h2>On your Chromebook</h2>
+        <p id="tabsWhen">Asking your Chromebook…</p>
+      </div>
+      <button type="button" class="text-btn" id="refreshTabs">Refresh</button>
+    </header>
+    <ul class="tab-list" id="tabList"></ul>
+  </section>
+
+  <section class="sheet tall" id="sheetNote" role="dialog" aria-label="Quick note" hidden>
+    <div class="grabber"></div>
+    <header class="sheet-head">
+      <div>
+        <h2>Quick Note</h2>
+        <p id="noteWhen">Shared with your new tab</p>
+      </div>
+      <button type="button" class="text-btn" id="copyNote">Copy</button>
+    </header>
+    <textarea id="noteText" class="note-text" placeholder="Jot something down…"></textarea>
+  </section>
+
+  <section class="sheet tall" id="sheetSettings" role="dialog" aria-label="Settings" hidden>
+    <div class="grabber"></div>
+    <header class="sheet-head">
+      <div><h2>Settings</h2></div>
+      <button type="button" class="text-btn" data-close>Done</button>
+    </header>
+    <div class="settings-body">
+      <h3>Share sheet shortcuts</h3>
+      <p class="hint">Add “Send to Chromebook” and “Open on Chromebook” to your iPhone's Share menu with the Shortcuts app. These two addresses are what the shortcuts post to.</p>
+      <div class="copy-row">
+        <div><b>Send files</b><code id="urlFiles"></code></div>
+        <button type="button" class="text-btn" data-copy="urlFiles">Copy</button>
+      </div>
+      <div class="copy-row">
+        <div><b>Open links</b><code id="urlOpen"></code></div>
+        <button type="button" class="text-btn" data-copy="urlOpen">Copy</button>
+      </div>
+      <details class="steps">
+        <summary>How to build the shortcuts</summary>
+        <ol>
+          <li>Open <b>Shortcuts</b>, tap <b>+</b>, name it <b>Send to Chromebook</b>.</li>
+          <li>Tap the <b>ⓘ</b> button, turn on <b>Show in Share Sheet</b>, and set it to receive <b>Images, Files, PDFs and Media</b>.</li>
+          <li>Add <b>Repeat with Each</b> and pick <b>Shortcut Input</b>.</li>
+          <li>Inside it, add <b>Get Contents of URL</b>. Paste the <b>Send files</b> address, then straight after <code>filename=</code> add the <b>Repeat Item</b> variable, tap it and choose <b>Name</b>. Type a full stop, then add <b>Repeat Item</b> again and choose <b>File Extension</b>.</li>
+          <li>Open <b>Show More</b> on that action. Set <b>Method</b> to <b>POST</b> and <b>Request Body</b> to <b>File</b>, then pick <b>Repeat Item</b>.</li>
+          <li>Make a second shortcut called <b>Open on Chromebook</b>, receiving <b>URLs and Safari web pages</b>. Add <b>Get Contents of URL</b> with the <b>Open links</b> address, <b>Method POST</b>, <b>Request Body File</b> set to <b>Shortcut Input</b>.</li>
+        </ol>
+      </details>
+
+      <h3>Connection</h3>
+      <div class="copy-row">
+        <div><b>Pairing link</b><small>Paste this into Drop if it ever asks you to connect again.</small></div>
+        <button type="button" class="text-btn" id="copyPairing">Copy</button>
+      </div>
+      <button type="button" class="wide-btn danger" id="clearHistory">Clear history on this iPhone</button>
+    </div>
+  </section>
+
+  <section class="sheet" id="actions" role="dialog" aria-label="Message actions" hidden>
+    <div class="grabber"></div>
+    <div class="action-list" id="actionList"></div>
+  </section>
+
+  <section class="scanner" id="scanner" hidden>
+    <header class="scan-bar">
+      <button type="button" class="text-btn" id="scanCancel">Cancel</button>
+      <b id="scanTitle">Adjust corners</b>
+      <button type="button" class="text-btn strong" id="scanKeep">Keep</button>
+    </header>
+    <div class="scan-stage" id="scanStage">
+      <canvas id="scanCanvas"></canvas>
+      <svg id="scanOverlay" class="scan-overlay"></svg>
+      <div class="scan-busy" id="scanBusy" hidden><i></i></div>
+    </div>
+    <div class="scan-pages" id="scanPages" hidden>
+      <div class="page-grid" id="pageGrid"></div>
+    </div>
+    <footer class="scan-foot">
+      <div class="seg" id="scanFilter" role="radiogroup" aria-label="Scan style">
+        <button type="button" data-f="colour">Colour</button>
+        <button type="button" data-f="grey">Grey</button>
+        <button type="button" data-f="bw" class="on">B&amp;W</button>
+      </div>
+      <div class="scan-actions" id="scanAdjustActions">
+        <button type="button" class="wide-btn" id="scanRetake">Retake</button>
+      </div>
+      <div class="scan-actions" id="scanPageActions" hidden>
+        <button type="button" class="wide-btn" id="scanAddPage">Add page</button>
+        <button type="button" class="wide-btn primary" id="scanSend">Send PDF</button>
+      </div>
+    </footer>
+    <input id="scanInput" type="file" accept="image/*" capture="environment" hidden>
+  </section>
 
   <main id="unpaired" class="unpaired" hidden>
     <svg viewBox="0 0 64 64" aria-hidden="true"><rect x="8" y="8" width="18" height="18" rx="4" fill="none" stroke="currentColor" stroke-width="3"/><rect x="38" y="8" width="18" height="18" rx="4" fill="none" stroke="currentColor" stroke-width="3"/><rect x="8" y="38" width="18" height="18" rx="4" fill="none" stroke="currentColor" stroke-width="3"/><path d="M38 38h6v6h-6zM50 38h6v6h-6zM44 44h6v6h-6zM38 50h6v6h-6zM50 50h6v6h-6z" fill="currentColor"/></svg>
-    <h1>Scan to connect</h1>
-    <p>Open a new tab on your Chromebook, click the phone button, choose <b>From iPhone</b> and scan the code with your camera.</p>
+    <h1>Connect to your Chromebook</h1>
+    <p>On a new tab, click the phone button, choose <b>Drop</b> and scan the code with your camera.</p>
+    <form id="pairForm" class="pair-form">
+      <input id="pairInput" type="url" placeholder="Or paste your pairing link" autocomplete="off">
+      <button type="submit" class="wide-btn primary">Connect</button>
+    </form>
   </main>
 
+  <div class="toast" id="toast" role="status"></div>
+
+  <script src="scanner.js"></script>
   <script src="app.js"></script>
 </body>
 </html>
