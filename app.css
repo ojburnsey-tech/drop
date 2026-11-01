@@ -23,7 +23,11 @@
 html {
   min-height: 100%;
   min-height: 100lvh;
-  background: #1d110e url("bg.jpg") center / cover no-repeat;
+  background-color: #2a1714;
+  background-image: url("bg.jpg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: max(100%, 320vh) auto;
 }
 body {
   height: 100vh;
@@ -411,6 +415,7 @@ input, textarea { font: inherit; color: inherit; }
 .note-text::placeholder { color: var(--label-3); }
 
 .settings-body { overflow-y: auto; padding: 0 20px 10px; }
+.version { margin: 18px 0 4px; text-align: center; font-size: 12px; color: var(--label-3); }
 .settings-body h3 {
   margin: 14px 0 8px;
   font-size: 13px;
@@ -486,7 +491,8 @@ input, textarea { font: inherit; color: inherit; }
   position: fixed;
   left: 50%;
   top: calc(var(--safe-t) + 10px);
-  transform: translate(-50%, -140%);
+  transform: translate(-50%, calc(-100% - 60px));
+  opacity: 0;
   padding: 10px 18px;
   border-radius: 20px;
   background: rgba(40, 40, 44, 0.92);
@@ -497,10 +503,10 @@ input, textarea { font: inherit; color: inherit; }
   font-weight: 600;
   white-space: nowrap;
   z-index: 60;
-  transition: transform 420ms var(--spring);
+  transition: transform 420ms var(--spring), opacity 200ms var(--ease);
   pointer-events: none;
 }
-.toast.show { transform: translate(-50%, 0); }
+.toast.show { transform: translate(-50%, 0); opacity: 1; }
 
 .scanner {
   position: fixed;

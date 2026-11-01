@@ -2,7 +2,7 @@ Drop: updating your iPhone app
 
 1. Open your "drop" repository on github.com.
 2. Click Add file, then Upload files.
-3. Drag in all nine files: index.html, app.css, app.js, scanner.js, bg.jpg, apple-touch-icon.png,
+3. Drag in all nine files (version 5): index.html, app.css, app.js, scanner.js, bg.jpg, apple-touch-icon.png,
    icon-192.png, icon-512.png, manifest.webmanifest
    (replace the old ones when asked), then click Commit changes.
 4. Wait about a minute for GitHub Pages to update.
